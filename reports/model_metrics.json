@@ -1,0 +1,355 @@
+{
+  "dataset": {
+    "file": "data/sensor_data.csv",
+    "n_rows": 15000,
+    "n_features": 9,
+    "features": [
+      "mileage_km",
+      "engine_temp_c",
+      "rpm",
+      "vibration_level",
+      "oil_quality_pct",
+      "brake_pad_mm",
+      "battery_voltage",
+      "coolant_level_pct",
+      "vehicle_age_years"
+    ],
+    "target": "failure_risk",
+    "positive_count": 682,
+    "negative_count": 14318,
+    "positive_rate": 0.04546666666666667,
+    "missing_total": 0,
+    "duplicate_rows": 0
+  },
+  "split": {
+    "random_state": 42,
+    "test_size": 0.2,
+    "train_rows": 12000,
+    "test_rows": 3000,
+    "stratified": true
+  },
+  "cross_validation": {
+    "type": "StratifiedKFold",
+    "n_splits": 5,
+    "shuffle": true,
+    "random_state": 42
+  },
+  "baseline_5_fold_cv": {
+    "Logistic Regression": {
+      "accuracy": 0.8099999999999999,
+      "precision": 0.15257281537548859,
+      "recall": 0.6960133444537114,
+      "f1": 0.2502622444381896,
+      "roc_auc": 0.8171973458898251,
+      "average_precision": 0.42230472987831674
+    },
+    "Random Forest": {
+      "accuracy": 0.9624166666666667,
+      "precision": 0.6632208901583725,
+      "recall": 0.35336113427856547,
+      "f1": 0.46035173125218815,
+      "roc_auc": 0.8135037256032192,
+      "average_precision": 0.4109394311004914
+    },
+    "XGBoost": {
+      "accuracy": 0.9091666666666667,
+      "precision": 0.2661002000648269,
+      "recall": 0.5659382819015846,
+      "f1": 0.3618667236645813,
+      "roc_auc": 0.7909825235577492,
+      "average_precision": 0.41206897029044703
+    }
+  },
+  "tuned_5_fold_cv": {
+    "Logistic Regression": {
+      "search_type": "grid",
+      "configurations_tried": 7,
+      "search_space": {
+        "model__C": [
+          0.01,
+          0.03,
+          0.1,
+          0.3,
+          1,
+          3,
+          10
+        ]
+      },
+      "best_params": {
+        "model__C": 0.01
+      },
+      "cv_metrics": {
+        "accuracy": 0.8109999999999999,
+        "precision": 0.15365235299372357,
+        "recall": 0.6978482068390325,
+        "f1": 0.25181931830596377,
+        "roc_auc": 0.8175663457826637,
+        "average_precision": 0.4234189242710854
+      },
+      "cv_average_precision_std": 0.040845181950161555
+    },
+    "Random Forest": {
+      "search_type": "grid",
+      "configurations_tried": 18,
+      "search_space": {
+        "model__n_estimators": [
+          300
+        ],
+        "model__max_depth": [
+          4,
+          8,
+          12
+        ],
+        "model__min_samples_leaf": [
+          2,
+          5,
+          10
+        ],
+        "model__max_features": [
+          "sqrt",
+          0.5
+        ]
+      },
+      "best_params": {
+        "model__max_depth": 4,
+        "model__max_features": 0.5,
+        "model__min_samples_leaf": 10,
+        "model__n_estimators": 300
+      },
+      "cv_metrics": {
+        "accuracy": 0.8862499999999999,
+        "precision": 0.22885598913307054,
+        "recall": 0.6153294412010009,
+        "f1": 0.3326883126865016,
+        "roc_auc": 0.8240616363614457,
+        "average_precision": 0.43431748990505936
+      },
+      "cv_average_precision_std": 0.046422075025115896
+    },
+    "XGBoost": {
+      "search_type": "random",
+      "configurations_tried": 40,
+      "search_space": {
+        "model__n_estimators": [
+          100,
+          200,
+          300,
+          500
+        ],
+        "model__max_depth": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "model__learning_rate": [
+          0.01,
+          0.03,
+          0.05,
+          0.1
+        ],
+        "model__min_child_weight": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "model__subsample": [
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ],
+        "model__colsample_bytree": [
+          0.7,
+          0.8,
+          0.9,
+          1.0
+        ],
+        "model__reg_lambda": [
+          1,
+          2,
+          5,
+          10
+        ]
+      },
+      "best_params": {
+        "model__subsample": 0.9,
+        "model__reg_lambda": 5,
+        "model__n_estimators": 100,
+        "model__min_child_weight": 10,
+        "model__max_depth": 3,
+        "model__learning_rate": 0.03,
+        "model__colsample_bytree": 0.8
+      },
+      "cv_metrics": {
+        "accuracy": 0.8708333333333333,
+        "precision": 0.20910857033903554,
+        "recall": 0.6446538782318598,
+        "f1": 0.31494613429859597,
+        "roc_auc": 0.8225800109907102,
+        "average_precision": 0.4379942790748309
+      },
+      "cv_average_precision_std": 0.040405297162849116
+    }
+  },
+  "model_selection": {
+    "selection_metric": "average_precision",
+    "selected_model": "XGBoost",
+    "reason": "XGBoost had the highest tuned CV average precision (0.4380).",
+    "best_params": {
+      "model__subsample": 0.9,
+      "model__reg_lambda": 5,
+      "model__n_estimators": 100,
+      "model__min_child_weight": 10,
+      "model__max_depth": 3,
+      "model__learning_rate": 0.03,
+      "model__colsample_bytree": 0.8
+    },
+    "five_fold_cv_average_precision": 0.4379942790748309
+  },
+  "threshold": {
+    "threshold": 0.825,
+    "f1": 0.4979508196721312,
+    "precision": 0.5651162790697675,
+    "recall": 0.44505494505494503,
+    "selected_using": "5-fold out-of-fold predictions on training partition, maximum F1"
+  },
+  "test_metrics": {
+    "0.5": {
+      "threshold": 0.5,
+      "accuracy": 0.8653333333333333,
+      "precision": 0.20089285714285715,
+      "recall": 0.6617647058823529,
+      "f1": 0.3082191780821918,
+      "roc_auc": 0.8513031958593493,
+      "average_precision": 0.4199622607864929,
+      "confusion_matrix": [
+        [
+          2506,
+          358
+        ],
+        [
+          46,
+          90
+        ]
+      ],
+      "confusion_matrix_layout": "[[TN, FP], [FN, TP]]"
+    },
+    "0.825": {
+      "threshold": 0.825,
+      "accuracy": 0.9503333333333334,
+      "precision": 0.448,
+      "recall": 0.4117647058823529,
+      "f1": 0.42911877394636017,
+      "roc_auc": 0.8513031958593493,
+      "average_precision": 0.4199622607864929,
+      "confusion_matrix": [
+        [
+          2795,
+          69
+        ],
+        [
+          80,
+          56
+        ]
+      ],
+      "confusion_matrix_layout": "[[TN, FP], [FN, TP]]"
+    }
+  },
+  "risk_bands": {
+    "definition": {
+      "index": "0-100, monotone in model score, decision threshold = 50",
+      "LOW": "index < 30",
+      "MODERATE": "30 <= index < 50",
+      "HIGH": "index >= 50 (same as predicted class 1)"
+    },
+    "out_of_fold_train": {
+      "LOW": {
+        "n_vehicles": 10249,
+        "dataset_failure_rate": 0.018245682505610303
+      },
+      "MODERATE": {
+        "n_vehicles": 1321,
+        "dataset_failure_rate": 0.08781226343679031
+      },
+      "HIGH": {
+        "n_vehicles": 430,
+        "dataset_failure_rate": 0.5651162790697675
+      }
+    },
+    "test": {
+      "LOW": {
+        "n_vehicles": 2536,
+        "dataset_failure_rate": 0.01695583596214511
+      },
+      "MODERATE": {
+        "n_vehicles": 339,
+        "dataset_failure_rate": 0.10914454277286136
+      },
+      "HIGH": {
+        "n_vehicles": 125,
+        "dataset_failure_rate": 0.448
+      }
+    }
+  },
+  "maintenance_rule_evidence": {
+    "basis": "training partition, dataset failure_risk label",
+    "rules": {
+      "engine_overheat": {
+        "n_triggered": 590,
+        "share_of_vehicles": 0.049166666666666664,
+        "failure_rate_when_triggered": 0.1135593220338983,
+        "baseline_failure_rate": 0.0455,
+        "lift": 2.4958092754702923,
+        "strength": "moderate"
+      },
+      "oil_quality_low": {
+        "n_triggered": 877,
+        "share_of_vehicles": 0.07308333333333333,
+        "failure_rate_when_triggered": 0.3010262257696693,
+        "baseline_failure_rate": 0.0455,
+        "lift": 6.615961005926798,
+        "strength": "strong"
+      },
+      "brake_pad_low": {
+        "n_triggered": 489,
+        "share_of_vehicles": 0.04075,
+        "failure_rate_when_triggered": 0.5112474437627812,
+        "baseline_failure_rate": 0.0455,
+        "lift": 11.236207555225961,
+        "strength": "strong"
+      },
+      "coolant_low": {
+        "n_triggered": 502,
+        "share_of_vehicles": 0.041833333333333333,
+        "failure_rate_when_triggered": 0.053784860557768925,
+        "baseline_failure_rate": 0.0455,
+        "lift": 1.1820848474234928,
+        "strength": "weak"
+      },
+      "battery_voltage_low": {
+        "n_triggered": 2722,
+        "share_of_vehicles": 0.22683333333333333,
+        "failure_rate_when_triggered": 0.0653930933137399,
+        "baseline_failure_rate": 0.0455,
+        "lift": 1.4372108420602174,
+        "strength": "weak"
+      },
+      "age_or_mileage_high": {
+        "n_triggered": 1005,
+        "share_of_vehicles": 0.08375,
+        "failure_rate_when_triggered": 0.3034825870646766,
+        "baseline_failure_rate": 0.0455,
+        "lift": 6.669946968454432,
+        "strength": "strong"
+      }
+    }
+  },
+  "caveats": [
+    "failure_risk is the dataset's synthetic binary label (generated from a rule-based risk score); label semantics come from the dataset source.",
+    "Model scores are not calibrated real-world failure probabilities.",
+    "The dataset has no sequence/time-to-failure target; this model does not predict when a failure will occur.",
+    "CV scores of the tuned models are the best of many candidates, so they are slightly optimistic; the test split is the unbiased estimate."
+  ]
+}

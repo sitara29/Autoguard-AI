@@ -1,0 +1,28 @@
+{
+  "dataset": "sensor_data.csv",
+  "shape": [
+    15000,
+    10
+  ],
+  "feature_count": 9,
+  "features": [
+    "mileage_km",
+    "engine_temp_c",
+    "rpm",
+    "vibration_level",
+    "oil_quality_pct",
+    "brake_pad_mm",
+    "battery_voltage",
+    "coolant_level_pct",
+    "vehicle_age_years"
+  ],
+  "target": "failure_risk",
+  "class_counts": {
+    "0": 14318,
+    "1": 682
+  },
+  "positive_rate": 0.0454666667,
+  "missing_values_total": 0,
+  "duplicate_rows": 0,
+  "important_note": "Target is imbalanced (4.55% positive); do not use accuracy alone. The CSV has no explicit time-to-failure target."
+}
