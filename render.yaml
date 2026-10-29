@@ -1,0 +1,14 @@
+# Render Blueprint: deploys the FastAPI backend as a free web service.
+services:
+  - type: web
+    name: vehicle-risk-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-deploy.txt
+    startCommand: python -m uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: FRONTEND_ORIGINS   # set to your Vercel URL after the frontend is deployed
+        sync: false
